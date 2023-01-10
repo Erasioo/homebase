@@ -1,0 +1,48 @@
+import random
+
+class Character:
+    def __init__(self, health, weapon):
+        self.health = health
+        self.weapon = weapon
+    
+    
+class Weapon:
+    def __init__(self, damage, accuracy):
+        self.damage = damage
+        self.accuracy = accuracy
+    
+    def use(self, target):
+        target.health -= self.damage
+
+
+sword = Weapon(15, 75)
+knife = Weapon(10, 85)
+      
+user = Character(100, sword)
+enemy = Character(100, knife)
+    
+def player_turn():
+    while enemy.health > 0:
+        user_input = input('\n1. Attack\n2. Defend\n ')
+        if user_input == '1':
+            if random.randint(1, 101) <= user.weapon.accuracy:
+                user.weapon.use(enemy)
+                print(f'Hit! Enemy health: {enemy.health}')
+                enemy_turn()
+            else:
+                print('Miss')
+                enemy_turn()
+        elif user_input == '2':
+            pass
+        else:
+            print('Enter valid input')
+
+def enemy_turn():
+    if random.randint(1, 101) <= enemy.weapon.accuracy:
+        enemy.weapon.use(user)
+        print(f'You\'ve been hit! {user.health}')
+    else:
+        print('Enemy missed!')
+    
+    
+player_turn()
